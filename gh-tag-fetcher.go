@@ -153,7 +153,7 @@ func fetchRepos(ctx context.Context, org string) []repo {
 }
 
 func fetchLatestTag(ctx context.Context, org, name string) *semver.Version {
-	log.Printf("Fetching latest tag for %s/%s ", org, name)
+	log.Printf("Fetching latest tag for %s/%s", org, name)
 
 	refs, _, err := c.Git.ListMatchingRefs(ctx, org, name, &github.ReferenceListOptions{
 		Ref: "tags/",
@@ -207,12 +207,9 @@ func (vs ByVersion) Less(i, j int) bool {
 
 func printRepos(repos []repo) {
 	// logs will only be printed if verbose is enabled
-	for _, line := range reposToDebugOutput(repos) {
-		log.Println(line)
-	}
-	for _, line := range reposToStdOutput(repos) {
-		fmt.Println(line)
-	}
+	log.Println(strings.Join(reposToDebugOutput(repos), "\n"))
+	// stdout will always be produced
+	fmt.Println(strings.Join(reposToStdOutput(repos), "\n"))
 }
 
 func versionToString(v *semver.Version) string {
@@ -221,24 +218,6 @@ func versionToString(v *semver.Version) string {
 	}
 	return "v" + v.String()
 }
-
-// func createTags(ctx context.Context, repos []repo) {
-// 	for _, r := range repos {
-// 		branch := r.repo.GetDefaultBranch()
-// 		commit, _, err := c.Repositories.GetCommit(ctx, org, r.repo.GetName(), branch, &github.ListOptions{})
-// 		noError(err)
-//
-// 		createdRef, _, err := c.Git.CreateRef(ctx, org, r.repo.GetName(), &github.Reference{
-// 			Ref: github.String("ref/tags/v" + r.newTag.String()),
-// 			Object: &github.GitObject{
-// 				SHA: commit.SHA,
-// 			},
-// 		})
-// 		noError(err)
-//
-// 		_ = createdRef
-// 	}
-// }
 
 func reposToDebugOutput(repos []repo) []string {
 	repoLen := 0
