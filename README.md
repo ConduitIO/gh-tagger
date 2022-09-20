@@ -7,8 +7,7 @@ A set of tools for tagging multiple repositories at once.
 First build the tools
 
 ```
-go build gh-tag-fetcher.go
-go build gh-tag-creator.go
+make build
 ```
 
 Now you have two binaries that you can use together to bump
