@@ -1,3 +1,6 @@
 # binaries
 /gh-tag-fetcher
 /gh-tag-creator
+
+# repos (commonly used name for temporary file)
+/repos
